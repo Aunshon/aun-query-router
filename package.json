@@ -1,5 +1,5 @@
 {
-  "name": "aun-query-router",
+  "name": "@aunshon/query-router",
   "version": "1.0.0",
   "description": "A query-based router for React applications or WordPress pages",
   "main": "dist/index.js",

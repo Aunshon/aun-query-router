@@ -5,12 +5,12 @@ A query-based router for WordPress pages or any react application.
 ## Installation
 
 ```bash
-npm install aun-query-router
+npm install @aunshon/query-router
 ```
 
 ## Usage
 ```jsx
-import { Routes, Route, Link, useWatchParam } from 'aun-query-router';
+import { Routes, Route, Link, useWatchParam } from '@aunshon/query-router';
 
 function App() {
 
