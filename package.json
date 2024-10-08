@@ -1,0 +1,30 @@
+{
+  "name": "aun-query-router",
+  "version": "1.0.0",
+  "description": "A query-based router for React applications or WordPress pages",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0 || ^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "typescript": "^4.5.0",
+    "react": "^18.0.0"
+  },
+  "keywords": ["react", "router", "query-based", "wordpress"],
+  "author": "Abul Hasan Aunshon",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Aunshon/aun-query-router.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Aunshon/aun-query-router/issues"
+  },
+  "homepage": "https://github.com/Aunshon/aun-query-router#readme"
+}
