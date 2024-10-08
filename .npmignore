@@ -1,0 +1,52 @@
+# Source files
+src/
+
+# TypeScript config
+tsconfig.json
+
+# Git files
+.git
+.gitignore
+
+# GitHub specific files
+.github/
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Node modules (although these are usually in .gitignore as well)
+node_modules/
+
+# Log files
+*.log
+
+# Test directories
+__tests__/
+test/
+tests/
+
+# Configuration files
+.eslintrc
+.prettierrc
+
+# Build tools
+webpack.config.js
+rollup.config.js
+
+# Temporary files
+*.tmp
+*.temp
+
+# Documentation files (if you don't want to include them in the package)
+# README.md
+# CHANGELOG.md
+# LICENSE
+
+# Any other files or directories specific to your project that you don't want in the npm package
