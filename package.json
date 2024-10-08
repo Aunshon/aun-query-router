@@ -8,7 +8,7 @@
     "build": "tsc",
     "clean": "rimraf dist",
     "prepare": "npm run clean && npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\""
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0"
