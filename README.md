@@ -13,8 +13,6 @@ npm install aun-query-router
 import { Routes, Route, Link, useWatchParam } from 'aun-query-router';
 
 function App() {
-  const query = useWatchParam(['path']);
-  const path = query['path'];
 
   return (
     <div>
