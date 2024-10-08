@@ -1,6 +1,6 @@
 {
   "name": "@aunshon/query-router",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A query-based router for React applications or WordPress pages",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,7 +16,12 @@
     "typescript": "^4.5.0",
     "react": "^18.0.0"
   },
-  "keywords": ["react", "router", "query-based", "wordpress"],
+  "keywords": [
+    "react",
+    "router",
+    "query-based",
+    "wordpress"
+  ],
   "author": "Abul Hasan Aunshon",
   "license": "MIT",
   "repository": {
