@@ -1,6 +1,6 @@
 {
   "name": "@aunshon/query-router",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A query-based router for React applications or WordPress pages",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
