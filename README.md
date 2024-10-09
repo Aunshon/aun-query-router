@@ -11,11 +11,21 @@ npm install @aunshon/query-router
 ## Usage
 
 ```jsx
-import { Routes, Route, QueryLink } from '@aunshon/query-router';
+import { Routes, Route, QueryLink } from "@aunshon/query-router";
 
 const About = () => <div><h3>About Page</h3></div>;
 const Contact = () => <div><h3>Contact Page</h3></div>;
 const Home = () => <div><h3>Home Page</h3></div>;
+const AboutDetail = (props) => {
+  console.log(props);
+  
+  return <div><h3>About Detail</h3></div>;
+};
+const NumberComponent = (props) => {
+  console.log(props);
+
+  return <div><h3>Number component</h3></div>;
+};
 const NoRouteFound = () => <div><h3>404 not found</h3></div>;
 
 const Navigation = () => (
@@ -23,19 +33,26 @@ const Navigation = () => (
     <ul>
       <li><QueryLink param="path" to="">Home</QueryLink></li>
       <li><QueryLink param="path" to="about">About</QueryLink></li>
+      <li><QueryLink param="path" to="about/23">About/23</QueryLink></li>
       <li><QueryLink param="path" to="contact">Contact</QueryLink></li>
-      <li><QueryLink param="path" to={new Date().getTime()}>Any no match path</QueryLink></li>
+      <li><QueryLink param="path" to="45">45 (any number)</QueryLink></li>
+      <li><QueryLink param="path" to="nomathc" >No match found param</QueryLink></li>
     </ul>
   </nav>
 );
 
+
 function App() {
+
   return (
     <div>
       <Navigation />
+
       <Routes paramWatcher="path">
         <Route index element={<Home />} />
         <Route param="about" element={<About />} />
+        <Route param="^about/(?<id>\d+)$" regex element={<AboutDetail />} />
+        <Route param="^(?<id>\d+)$" regex element={<NumberComponent />} />
         <Route param="contact" element={<Contact />} />
         <Route param="*" element={<NoRouteFound />} />
       </Routes>
@@ -158,6 +175,62 @@ Defines a single route within the Routes component.
 ```jsx
 <Route param="about" element={<About />} />
 ```
+## Route Regex Support
+
+This routing supports regex-based routing, allowing for more flexible and powerful route matching. This feature enables you to create routes that match complex patterns and extract parameters from the URL.
+
+### Using Regex Routes
+
+To use a regex-based route, add the `regex` prop to your `Route` component and provide a regular expression as the `param` value.
+
+```jsx
+<Route param="^about/(?<id>\d+)$" regex element={<AboutDetail />} />
+```
+
+In this example:
+- `^` asserts the start of the string
+- `about/` matches the literal string "about/"
+- `(?<id>\d+)` is a named capture group that matches one or more digits
+- `$` asserts the end of the string
+
+This route will match paths like "/about/123" or "/about/456789", but not "/about/abc".
+
+### Accessing Captured Parameters
+
+When a regex route matches, any named capture groups in the regex are passed to the component as props. You can access these in your component like this:
+
+```jsx
+const AboutDetail = ({ params }) => {
+  return <div>About Detail for ID: {params.id}</div>;
+};
+```
+
+### Example: Numbers-Only Route
+
+Here's an example of a route that only accepts numeric paths:
+
+```jsx
+<Route param="^(?<id>\d+)$" regex element={<NumberComponent />} />
+
+const NumberComponent = ({ params }) => {
+  return <div>Numeric Route: {params.id}</div>;
+};
+```
+
+This route will:
+- Match: "/123", "/456789"
+- Not match: "/abc", "/123abc", "/"
+
+### Tips for Using Regex Routes
+
+1. Always use the `^` and `$` anchors to match the entire path.
+2. Use named capture groups `(?<name>...)` to extract parameters.
+3. Be careful with greedy quantifiers (`*`, `+`) as they might match more than intended.
+4. Test your regex thoroughly to ensure it matches and captures as expected.
+
+### Performance Considerations
+
+While regex routes offer great flexibility, they can be slower than simple string matching for very high traffic applications. Use them judiciously, especially if you have a large number of routes.
 
 ## License
 
