@@ -93,6 +93,25 @@ replaceLink((currentParams) => ({
 // Replaces or adds 'newParam' and 'updatedParam' while keeping other existing parameters
 ```
 
+#### getAllParams
+
+Returns all parameters, query string and `URLSearchParams` instance in the URL.
+
+```jsx
+import { RouterLocation } from '@aunshon/query-router';
+
+function MyComponent() {
+  const { getAllParams } = RouterLocation();
+  const { currentParams, searchParams, searchString } = getAllParams();
+
+  console.log('Current params:', currentParams);
+  console.log('Search string:', searchString);
+  console.log('Search params, URLSearchParams :', searchParams);
+
+  // Rest of the component...
+}
+```
+
 ### useWatchParam
 
 The `useWatchParam` hook allows you to watch for changes in specific query parameters.
@@ -110,12 +129,6 @@ function MyComponent() {
 
   // Rest of the component...
 }
-```
-
-If no parameters are specified, it watches all query parameters:
-
-```jsx
-const allParams = useWatchParam();
 ```
 
 ## Components

@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
+import { RouterLocation } from "../utils/RouterLocation";
 
-export const useWatchParam = (params: string[]) => {
+export const useWatchParam = (params: string[] ) => {
+  const { getAllParams } = RouterLocation();
   const [queryParams, setQueryParams] = useState<Record<string, string>>(() => {
-    const searchParams = new URLSearchParams(window.location.search);
+    const { searchParams } = getAllParams();
+
     return params.reduce((acc, param) => {
       if (searchParams.has(param)) {
         acc[param] = searchParams.get(param)!;
@@ -15,7 +18,7 @@ export const useWatchParam = (params: string[]) => {
 
   useEffect(() => {
     const handleUrlChange = () => {
-      const searchParams = new URLSearchParams(window.location.search);
+      const { searchParams } = getAllParams();
       const newParams: Record<string, string> = {};
       let hasChanged = false;
 

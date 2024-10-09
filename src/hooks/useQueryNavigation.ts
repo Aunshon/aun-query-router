@@ -1,6 +1,9 @@
 import { useCallback } from 'react';
+import { RouterLocation } from "../utils/RouterLocation";
 
 export const useQueryNavigation = () => {
+  const { getAllParams } = RouterLocation();
+
   const updateUrl = useCallback((newSearchParams: URLSearchParams, eventType: 'pushstate' | 'replacestate' = 'pushstate') => {
     const newUrl = `${window.location.pathname}?${newSearchParams.toString()}`;
     if (eventType === 'pushstate') {
@@ -12,52 +15,49 @@ export const useQueryNavigation = () => {
   }, []);
 
   const navigateLink = useCallback((params: Record<string, string>) => {
-    const currentSearchParams = new URLSearchParams(window.location.search);
+    const { searchParams } = getAllParams();
     let hasChanged = false;
 
     // @ts-ignore
     Object.entries(params).forEach(([key, value]) => {
-      if (currentSearchParams.get(key) !== value) {
-        currentSearchParams.set(key, value);
+      if (searchParams.get(key) !== value) {
+        searchParams.set(key, value);
         hasChanged = true;
       }
     });
 
     if (hasChanged) {
-      updateUrl(currentSearchParams);
+      updateUrl(searchParams);
     }
   }, [updateUrl]);
 
   const removeLinkParam = useCallback((params: string[]) => {
-    const currentSearchParams = new URLSearchParams(window.location.search);
+    const { searchParams } = getAllParams();
     let hasChanged = false;
 
     params.forEach(param => {
-      if (currentSearchParams.has(param)) {
-        currentSearchParams.delete(param);
+      if (searchParams.has(param)) {
+        searchParams.delete(param);
         hasChanged = true;
       }
     });
 
     if (hasChanged) {
-      updateUrl(currentSearchParams);
+      updateUrl(searchParams);
     }
   }, [updateUrl]);
 
-  const replaceLink = useCallback((callback: (params: Record<string, string>) => Record<string, string>) => {
-    const currentSearchParams = new URLSearchParams(window.location.search);
-    const currentParams: Record<string, string> = {};
-    // @ts-ignore
-    for (let [key, value] of currentSearchParams.entries()) {
-      currentParams[key] = value;
-    }
+  const replaceLink = useCallback( (callback: (params: Record<string, string>) => Record<string, string>) => {
+    const { currentParams, searchParams } = getAllParams();
 
     const newParams = callback(currentParams);
     const newSearchParams = new URLSearchParams(newParams);
 
-    if (newSearchParams.toString() !== currentSearchParams.toString()) {
+    if (newSearchParams.toString() !== searchParams.toString()) {
       updateUrl(newSearchParams, 'replacestate');
     }
+
+
   }, [updateUrl]);
 
   return { navigateLink, removeLinkParam, replaceLink };
