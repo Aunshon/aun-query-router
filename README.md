@@ -250,6 +250,19 @@ type MiddlewareFunction = (
 - `next()`: A function to call the next middleware or render the route component
 - `redirect(to)`: A function to redirect to another route
 
+### Middleware Function Example
+
+```jsx
+const authMiddleware = (params, next, redirect) => {
+  // Perform some checks or actions
+  if (someCondition) {
+    return next(); // Proceed to the route
+  } else {
+    return redirect('login'); // Redirect to another route
+  }
+};
+```
+
 #### Using Middleware
 
 You can add middleware to a route by using the `middleware` prop:

@@ -25,8 +25,8 @@ export const Routes: React.FC<RoutesProps> = ({ children, paramWatcher, routerNa
   const renderedRoute = useMemo(() => {
     const childrenArray = React.Children.toArray(children);
 
-    const findAndRenderRoute = (path: string) => {
-      const matchedRoute = childrenArray.find((child: any) => {
+    const findRoute = ( path: string ) => {
+      return childrenArray.find((child: any) => {
         if (child.props.index && path === '') {
           return true;
         }
@@ -38,6 +38,10 @@ export const Routes: React.FC<RoutesProps> = ({ children, paramWatcher, routerNa
 
         return child.props.param === path;
       });
+    }
+
+    const findAndRenderRoute = (path: string): any => {
+      const matchedRoute = findRoute( path );
 
       if (matchedRoute) {
         const routeProps = (matchedRoute as any).props;
@@ -51,6 +55,10 @@ export const Routes: React.FC<RoutesProps> = ({ children, paramWatcher, routerNa
         }
 
         return React.cloneElement(routeProps.element, { params: routeParams });
+      }
+
+      if ( path !== '*'  ) {
+        return findAndRenderRoute( '*' );
       }
 
       return null;
@@ -105,8 +113,7 @@ export const Routes: React.FC<RoutesProps> = ({ children, paramWatcher, routerNa
       return React.cloneElement(routeProps.element, { params: routeParams });
     }
 
-    const noMatchRoute = childrenArray.find((child: any) => child.props.param === '*');
-    return noMatchRoute ? React.cloneElement((noMatchRoute as any).props.element) : null;
+    return findAndRenderRoute( '*' );
   }, [children, currentPath, navigateLink, paramWatcher]);
 
   return (
