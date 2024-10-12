@@ -250,7 +250,7 @@ type MiddlewareFunction = (
 - `next()`: A function to call the next middleware or render the route component
 - `redirect(to)`: A function to redirect to another route
 
-### Middleware Function Example
+#### Middleware Function Example
 
 ```jsx
 const authMiddleware = (params, next, redirect) => {
