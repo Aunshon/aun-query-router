@@ -1,17 +1,17 @@
-# @aunshon/query-router
+# react-query-router
 
 A query-based router for WordPress pages or any React application.
 
 ## Installation
 
 ```bash
-npm install @aunshon/query-router
+npm install react-query-router
 ```
 
 ## Usage
 
 ```jsx
-import { Routes, Route, QueryLink } from "@aunshon/query-router";
+import { Routes, Route, QueryLink } from "react-query-router";
 
 const About = () => <div><h3>About Page</h3></div>;
 const Contact = () => <div><h3>Contact Page</h3></div>;
@@ -70,7 +70,7 @@ export default App;
 The `useQueryNavigation` hook provides methods for manipulating the URL query parameters.
 
 ```jsx
-import { useQueryNavigation } from '@aunshon/query-router';
+import { useQueryNavigation } from 'react-query-router';
 
 function MyComponent() {
   const { navigateLink, removeLinkParam, replaceLink } = useQueryNavigation();
@@ -115,7 +115,7 @@ replaceLink((currentParams) => ({
 Returns all parameters, query string and `URLSearchParams` instance in the URL.
 
 ```jsx
-import { RouterLocation } from '@aunshon/query-router';
+import { RouterLocation } from 'react-query-router';
 
 function MyComponent() {
   const { getAllParams } = RouterLocation();
@@ -134,7 +134,7 @@ function MyComponent() {
 The `useWatchParam` hook allows you to watch for changes in specific query parameters.
 
 ```jsx
-import { useWatchParam } from '@aunshon/query-router';
+import { useWatchParam } from 'react-query-router';
 
 function MyComponent() {
   const params = useWatchParam(['user', 'page']);
@@ -231,6 +231,48 @@ This route will:
 ### Performance Considerations
 
 While regex routes offer great flexibility, they can be slower than simple string matching for very high traffic applications. Use them judiciously, especially if you have a large number of routes.
+
+### Middleware Support
+
+react-query-router now supports middleware functions for routes. Middleware allows you to run code before a route is rendered, enabling features like authentication checks, logging, or data prefetching.
+
+#### Middleware Function Signature
+
+```typescript
+type MiddlewareFunction = (
+  params: Record<string, string>,
+  next: () => React.ReactNode | null,
+  redirect: (to: string) => void
+) => React.ReactNode | void;
+```
+
+- `params`: An object containing the route parameters
+- `next()`: A function to call the next middleware or render the route component
+- `redirect(to)`: A function to redirect to another route
+
+#### Using Middleware
+
+You can add middleware to a route by using the `middleware` prop:
+
+```jsx
+<Route 
+  param="about" 
+  element={<About />} 
+  middleware={authMiddleware} 
+/>
+```
+
+You can also use an array of middleware functions:
+
+```jsx
+<Route 
+  param="dashboard" 
+  element={<Dashboard />} 
+  middleware={[logMiddleware, authMiddleware]} 
+/>
+```
+
+Middleware functions are executed in the order they are provided.
 
 ## License
 

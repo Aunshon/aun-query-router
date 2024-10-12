@@ -1,11 +1,12 @@
 {
-  "name": "@aunshon/query-router",
+  "name": "react-query-router",
   "version": "1.0.9",
   "description": "A query-based router for React applications or WordPress pages",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "watch": "tsc --watch",
     "clean": "rimraf dist",
     "prepare": "npm run clean && npm run build",
     "test": "echo \"Error: no test specified\""
